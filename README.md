@@ -11,7 +11,7 @@ pnpm install
 pnpm dev
 ```
 
-The site is built with Next.js-compatible React components through vinext and targets Cloudflare Workers.
+The site is built with Next.js and exports to static HTML for GitHub Pages.
 
 ## GitHub Pages
 
