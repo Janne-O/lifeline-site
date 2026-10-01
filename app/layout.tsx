@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { basePath } from "@/lib/paths";
+import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import "./globals.css";
 
 export function generateMetadata(): Metadata {
@@ -19,7 +20,7 @@ export function generateMetadata(): Metadata {
       template: "%s — Huomen",
     },
     description:
-      "A private life journal for notes, places, photos, voice, and everyday context—gathered into a timeline only you can see.",
+      "A private journal for the moments you want to remember. Capture notes, photos, and voice recordings, and return to your day as a timeline.",
     icons: {
       icon: `${basePath}/assets/lifeline-icon.png`,
       apple: `${basePath}/assets/lifeline-icon.png`,
@@ -43,7 +44,13 @@ export function generateMetadata(): Metadata {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <div className="site-frame">
+          <SiteHeader />
+          {children}
+          <SiteFooter />
+        </div>
+      </body>
     </html>
   );
 }

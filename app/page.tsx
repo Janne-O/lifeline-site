@@ -1,15 +1,17 @@
 import Link from "next/link";
 import { Markdown } from "./components/Markdown";
+import { ContentImage } from "./components/ContentImage";
+import { AppStoreBadge } from "./components/AppStoreBadge";
 import { field, getCollection, getDocument } from "@/lib/content";
 import { withBasePath } from "@/lib/paths";
 
-const home = getDocument("home.md");
-const features = getCollection("features");
-const privacy = getDocument("sections/privacy.md");
-const closing = getDocument("sections/closing.md");
-
 export default function Home() {
-  const showMainScreenshot = field(home, "showImage", "false") === "true";
+  const home = getDocument("home.md");
+  const features = getCollection("features");
+  const privacy = getDocument("sections/privacy.md");
+  const closing = getDocument("sections/closing.md");
+  const downloadHref = field(home, "downloadHref");
+  const downloadLabel = field(home, "downloadLabel", "Download Huomen");
 
   return (
     <main className="home-page">
@@ -25,75 +27,58 @@ export default function Home() {
           <h1>Huomen</h1>
           <p className="tagline">{field(home, "title")}</p>
           <div className="home-intro"><Markdown>{home.body}</Markdown></div>
-          <p className="testing-label">
-            <span aria-hidden="true" />
-            {field(home, "availabilityLabel", "Private testing")}
-          </p>
+          {downloadHref && <AppStoreBadge href={downloadHref} label={downloadLabel} />}
+          <p className="download-note">{field(home, "downloadNote", "Available on the App Store")}</p>
           <p className="platform-line">{field(home, "platformLine")}</p>
         </header>
 
-        {showMainScreenshot && (
-          <figure className="main-screenshot">
-            <img
-              src={withBasePath(field(home, "image"))}
-              alt={field(home, "imageAlt")}
-              width={1179}
-              height={2556}
-            />
-          </figure>
-        )}
+        <ContentImage document={home} prominent />
 
         <section className="feature-summary" aria-label="What Huomen does">
           <ul>
-            {features.map((feature, index) => {
-              const showScreenshot = field(feature, "showImage", "false") === "true";
+            {features.map((feature) => {
               return (
                 <li key={feature.slug}>
-                  <span className={`feature-dot feature-dot-${index + 1}`} aria-hidden="true" />
+                  <span className="feature-dot" aria-hidden="true" />
                   <div>
                     <h2>{field(feature, "title")}</h2>
-                    <Markdown>{feature.body}</Markdown>
-                    {showScreenshot && (
-                      <figure className="feature-screenshot">
-                        <img
-                          src={withBasePath(field(feature, "image"))}
-                          alt={field(feature, "imageAlt")}
-                          loading="lazy"
-                        />
-                      </figure>
-                    )}
+                    <Markdown>{field(feature, "summary", feature.body)}</Markdown>
                   </div>
                 </li>
               );
             })}
           </ul>
+          <div className="feature-summary-links">
+            <Link className="feature-summary-link" href="/features">Explore all features →</Link>
+            <Link className="feature-summary-link" href="/plus">See what Huomen+ adds →</Link>
+          </div>
         </section>
 
         <article className="home-notes">
           <section>
             <h2>{field(privacy, "title")}</h2>
             <Markdown>{privacy.body}</Markdown>
+            <ContentImage document={privacy} />
             <Link href={field(privacy, "linkHref", "/privacy")}>
               {field(privacy, "linkLabel", "Read the privacy overview")} →
             </Link>
           </section>
 
-          <section>
+          <section className="closing-section">
             <h2>{field(closing, "title")}</h2>
             <Markdown>{closing.body}</Markdown>
-            <Link href={field(closing, "linkHref", "/support")}>
-              {field(closing, "linkLabel", "Visit support")} →
-            </Link>
+            <ContentImage document={closing} />
+            {downloadHref && <AppStoreBadge href={downloadHref} label={downloadLabel} />}
           </section>
         </article>
 
-        <footer className="home-footer">
-          <p>Made in Finland.</p>
-          <p>
-            © {new Date().getFullYear()} · <Link href="/privacy">Privacy</Link> ·{" "}
-            <Link href="/support">Support</Link>
-          </p>
-        </footer>
+        <aside className="story-link-section">
+          <Link href="/story">
+            {field(home, "storyLinkLabel", "Story behind Huomen")} <span aria-hidden="true">→</span>
+          </Link>
+          <p>{field(home, "storyLinkDescription")}</p>
+        </aside>
+
       </div>
     </main>
   );

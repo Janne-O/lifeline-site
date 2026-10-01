@@ -1,12 +1,10 @@
 ---
 # Copy this file into content/features/ and give it a unique filename.
-# Change to true to show the feature on both the homepage and Features page.
-published: false
-order: 10
-eyebrow: Feature label
-title: A clear, human headline.
+order: 4
+eyebrow: Exporting
+title: Your data is yours, to do as you will.
 # Shown in the compact feature list on the homepage.
-summary: One short sentence about this feature.
+summary: Freely export and use your data as you wish.
 image: /screenshots/your-screenshot.png
 imageAlt: Describe what the screenshot shows
 imageCaption: A short optional caption
@@ -14,9 +12,6 @@ imageCaption: A short optional caption
 imageFormat: phone
 # Set this to true when the screenshot is current and safe to share.
 showImage: false
+published: true
 ---
-Write the fuller feature description here. It appears on the Features page.
-
-Add another paragraph if the feature needs more explanation.
-
-You can use **bold text**, [links](https://example.com), and simple lists.
+You can export your journal-entries as standard Markdown-files, to be used as you wish in any application that supports Markdown. You can also export your entire journal as an offline website to be viewed with a web-browser.

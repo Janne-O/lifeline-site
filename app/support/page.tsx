@@ -1,33 +1,27 @@
-import Link from "next/link";
 import { Markdown } from "../components/Markdown";
 import { field, getCollection, getDocument } from "@/lib/content";
-import { withBasePath } from "@/lib/paths";
 
-const support = getDocument("support.md");
-const faqs = getCollection("faqs");
-const reporting = getDocument("sections/reporting.md");
-
-export const metadata = {
-  title: field(support, "metaTitle", "Support"),
-  description: field(support, "metaDescription"),
-};
+export function generateMetadata() {
+  const support = getDocument("support.md");
+  return {
+    title: field(support, "metaTitle", "Support"),
+    description: field(support, "metaDescription"),
+  };
+}
 
 export default function SupportPage() {
+  const support = getDocument("support.md");
+  const faqs = getCollection("faqs");
+  const reporting = getDocument("sections/reporting.md");
+
   return (
     <main className="legal-page support-page">
-      <header className="legal-header shell">
-        <Link className="brand" href="/">
-          <img className="brand-icon" src={withBasePath("/assets/lifeline-icon.png")} alt="" width={42} height={42} />
-          <span>Huomen</span>
-        </Link>
-        <Link className="back-link" href="/">← Back to Huomen</Link>
-      </header>
       <section className="support-hero shell">
         <p className="kicker"><span className="pulse" />{field(support, "kicker")}</p>
         <h1>{field(support, "title")}</h1>
         <p>{field(support, "intro")}</p>
         <a className="button button-primary" href={field(support, "linkHref")}>
-          {field(support, "linkLabel")} <span aria-hidden="true">↗</span>
+          {field(support, "linkLabel")}
         </a>
       </section>
       <section className="faq shell" aria-labelledby="faq-title">

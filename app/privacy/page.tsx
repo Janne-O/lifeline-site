@@ -1,29 +1,24 @@
 import Link from "next/link";
 import { Markdown } from "../components/Markdown";
 import { field, getDocument } from "@/lib/content";
-import { withBasePath } from "@/lib/paths";
 
-const privacy = getDocument("privacy.md");
-const sections = privacy.body.split(/\n(?=## )/).map((section) => {
-  const match = section.match(/^##\s+(.+)\n+([\s\S]*)$/);
-  return match ? { title: match[1], body: match[2] } : { title: "", body: section };
-});
-
-export const metadata = {
-  title: field(privacy, "metaTitle", "Privacy"),
-  description: field(privacy, "metaDescription"),
-};
+export function generateMetadata() {
+  const privacy = getDocument("privacy.md");
+  return {
+    title: field(privacy, "metaTitle", "Privacy"),
+    description: field(privacy, "metaDescription"),
+  };
+}
 
 export default function PrivacyPage() {
+  const privacy = getDocument("privacy.md");
+  const sections = privacy.body.split(/\n(?=## )/).map((section) => {
+    const match = section.match(/^##\s+(.+)\n+([\s\S]*)$/);
+    return match ? { title: match[1], body: match[2] } : { title: "", body: section };
+  });
+
   return (
     <main className="legal-page">
-      <header className="legal-header shell">
-        <Link className="brand" href="/">
-          <img className="brand-icon" src={withBasePath("/assets/lifeline-icon.png")} alt="" width={42} height={42} />
-          <span>Huomen</span>
-        </Link>
-        <Link className="back-link" href="/">← Back to Huomen</Link>
-      </header>
       <article className="legal-content shell">
         <p className="kicker"><span className="pulse" />{field(privacy, "kicker")}</p>
         <h1>{field(privacy, "title")}</h1>

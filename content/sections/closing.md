@@ -1,7 +1,5 @@
 ---
 kicker: One continuous thread
-title: Small moments. A life in view.
-linkLabel: Visit support
-linkHref: /support
+title: Start remembering your days.
 ---
-Huomen is being prepared for release across iPhone, iPad, Mac, Apple Watch, and Apple TV.
+You don't need a remarkable day to have something worth keeping. Start with one small moment.

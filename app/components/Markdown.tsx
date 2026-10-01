@@ -21,6 +21,7 @@ function inline(text: string): ReactNode[] {
 
 type Block =
   | { type: "heading"; level: 2 | 3; text: string }
+  | { type: "divider" }
   | { type: "paragraph"; text: string }
   | { type: "list"; items: string[] };
 
@@ -44,6 +45,13 @@ function blocks(markdown: string): Block[] {
     if (!line) {
       flushParagraph();
       flushList();
+      continue;
+    }
+
+    if (/^---+$/.test(line)) {
+      flushParagraph();
+      flushList();
+      result.push({ type: "divider" });
       continue;
     }
 
@@ -78,6 +86,7 @@ export function Markdown({ children }: { children: string }) {
         ? <h2 key={index}>{inline(block.text)}</h2>
         : <h3 key={index}>{inline(block.text)}</h3>;
     }
+    if (block.type === "divider") return <hr key={index} />;
     if (block.type === "list") {
       return <ul key={index}>{block.items.map((item) => <li key={item}>{inline(item)}</li>)}</ul>;
     }

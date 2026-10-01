@@ -3,8 +3,8 @@
 # Change to true to show the feature on both the homepage and Features page.
 published: false
 order: 10
-eyebrow: Feature label
-title: A clear, human headline.
+eyebrow: Themes
+title: Make Huomen look like you.
 # Shown in the compact feature list on the homepage.
 summary: One short sentence about this feature.
 image: /screenshots/your-screenshot.png
@@ -15,8 +15,4 @@ imageFormat: phone
 # Set this to true when the screenshot is current and safe to share.
 showImage: false
 ---
-Write the fuller feature description here. It appears on the Features page.
-
-Add another paragraph if the feature needs more explanation.
-
-You can use **bold text**, [links](https://example.com), and simple lists.
+Huomen offers several different themes, all in light and dark variants. Huomen+ also features a playful Pixel-theme, featuring retro-styled 16bit pixel-graphics.

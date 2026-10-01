@@ -37,6 +37,11 @@ jobs:
           NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
           NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
 
+      - name: Exclude archived personal screenshots
+        run: |
+          rm -f out/screenshots/timeline-light.jpg
+          rm -f out/screenshots/timeline-dark.jpg
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
