@@ -15,7 +15,7 @@ The site is built with Next.js and exports to static HTML for GitHub Pages.
 
 ## GitHub Pages
 
-Pushes to `main` automatically build the same Markdown content as a static site and deploy it through GitHub Pages. The deployment workflow lives in `.github/workflows/pages.yml`.
+The manual deployment workflow in `.github/workflows/pages.yml` builds the Markdown content as a static site for `https://huomen.app`. Run **Deploy website to GitHub Pages** from the repository's Actions tab after publishing changes to `main`.
 
 ## Pages
 

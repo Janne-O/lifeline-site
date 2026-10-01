@@ -25,28 +25,28 @@ test("server-renders the Huomen product page", async () => {
 
 test("links to the feature overview and renders feature details from Markdown", async () => {
   const [home, features] = await Promise.all([render(), render("/features")]);
-  assert.match(home, /href="\/lifeline-site\/features\/"/);
+  assert.match(home, /href="\/features\/"/);
   assert.match(home, /Type, speak, or tap a quick option/);
   assert.doesNotMatch(home, /Each entry keeps its time/);
   assert.match(features, /A closer look at Huomen\./);
   assert.match(features, /Each entry keeps its time/);
   assert.match(features, /A fictional day in Huomen\./);
-  assert.match(features, /src="\/lifeline-site\/screenshots\/huomen-timeline-demo\.png"/);
+  assert.match(features, /src="\/screenshots\/huomen-timeline-demo\.png"/);
   assert.match(features, /Download Huomen/);
   assert.match(features, /class="app-store-badge"/);
 });
 
 test("links to the editable story page above the homepage footer", async () => {
   const [home, story] = await Promise.all([render(), render("/story")]);
-  assert.match(home, /class="story-link-section"[\s\S]*href="\/lifeline-site\/story\/">Story behind Huomen/);
+  assert.match(home, /class="story-link-section"[\s\S]*href="\/story\/">Story behind Huomen/);
   assert.match(home, /Read about the ideas and decisions behind the app\./);
   assert.ok(home.indexOf('class="story-link-section"') < home.indexOf('class="site-footer shell"'));
   assert.match(story, /<title>Story behind Huomen — Huomen<\/title>/);
   assert.match(story, /class="story-body"/);
   assert.equal((story.match(/<hr\/>/g) ?? []).length, 2);
-  assert.match(story, /href="\/lifeline-site\/plus">the extra features<\/a>/);
-  assert.match(story, /href="\/lifeline-site\/features\/"/);
-  assert.match(story, /class="story-actions"[\s\S]*class="app-store-badge"[\s\S]*href="\/lifeline-site\/features\/">Explore the features/);
+  assert.match(story, /href="\/plus">the extra features<\/a>/);
+  assert.match(story, /href="\/features\/"/);
+  assert.match(story, /class="story-actions"[\s\S]*class="app-store-badge"[\s\S]*href="\/features\/">Explore the features/);
 });
 
 test("shows shared navigation and footer on every page, including News", async () => {
@@ -57,7 +57,7 @@ test("shows shared navigation and footer on every page, including News", async (
   for (const html of pages) {
     assert.match(html, /aria-label="Main navigation"/);
     for (const route of ["features", "news", "privacy", "support"]) {
-      assert.match(html, new RegExp(`href="/lifeline-site/${route}/"`));
+      assert.match(html, new RegExp(`href="/${route}/"`));
     }
     assert.match(html, /class="site-footer shell"/);
     assert.match(html, /Made in Finland\./);
@@ -75,8 +75,8 @@ test("links to the editable Huomen+ page and lists the paid features", async () 
     render("/plus"),
     render("/story"),
   ]);
-  assert.match(home, /href="\/lifeline-site\/plus\/">See what Huomen\+ adds/);
-  assert.match(features, /href="\/lifeline-site\/plus\/">See what Huomen\+ adds/);
+  assert.match(home, /href="\/plus\/">See what Huomen\+ adds/);
+  assert.match(features, /href="\/plus\/">See what Huomen\+ adds/);
   assert.match(plus, /<title>Huomen\+ features — Huomen<\/title>/);
   assert.match(plus, /class="app-store-badge"/);
   assert.match(story, /class="app-store-badge"/);
@@ -108,11 +108,12 @@ test("renders privacy and support routes", async () => {
   assert.doesNotMatch(support, /issue tracker|Open an issue|github\.com\/Janne-O\/LifeLine\/issues/i);
 });
 
-test("uses repository-safe links and assets", async () => {
+test("uses custom-domain links and assets", async () => {
   const html = await render();
-  assert.match(html, /href="\/lifeline-site\/privacy\/"/);
-  assert.match(html, /src="\/lifeline-site\/assets\/lifeline-icon\.png"/);
-  assert.doesNotMatch(html, /(?:href|src)="\/(?!lifeline-site\/)/);
+  assert.match(html, /href="\/privacy\/"/);
+  assert.match(html, /src="\/assets\/lifeline-icon\.png"/);
+  assert.match(html, /https:\/\/huomen\.app\/og\.png/);
+  assert.doesNotMatch(html, /(?:href|src)="\/lifeline-site\//);
 });
 
 test("ships the branded visual assets without starter dependencies", async () => {
